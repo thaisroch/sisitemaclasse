@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  db:
+     image: mysql:5.7
+     container_name: mysqldb
+     ports:
+       - '3306:3306'
+     environment:
+        MYSQL_ROOT_PASSWORD: 'DB_sistema*classe1'
+
+  sistema_web:
+      container_name: sistemadeclasse
+      image: thais/sistemadeclasse:1.1
+      restart: always
+      volumes:
+        - ./:/var/www/html
+      environment:
+          MYSQL_DATABASE: 'db_sistemadeclasse'
+          MYSQL_USER: 'root'
+          MYSQL_PASSWORD: 'DB_sistema*classe1'
+          MYSQL_ROOT_PASSWORD: 'DB_sistema*classe1'
+
+      working_dir: /var/www/html/
+      ports:
+        - "8080:80"
+      depends_on:
+        - db
+
